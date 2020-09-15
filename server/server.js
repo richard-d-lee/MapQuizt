@@ -14,14 +14,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/user', function(req, res) {
-
+  console.log(req.query)
+  User.findOne({ name: req.query.id })
+  .then((data) => {
+    if (data !== null) {
+      console.log(data)
+      if (data.password === req.query.password) {
+        res.send('logged')
+      } else {
+        res.send('passInvalid')
+      }
+    } else {
+      res.send('nonexistent')
+    }
+  })
 })
 
 app.post('/user', function(req, res) {
-  console.log(req.body);
-  User.create({
-    name: req.body.id,
-    password: req.body.pass
+  User.findOne({ name: req.body.body.id })
+  .then((data) => {
+    if (data !== null) {
+      res.send('error')
+    } else {
+      User.create({
+        name: req.body.body.id,
+        password: req.body.body.pass
+      })
+      .then(() => {
+        console.log('created');
+        res.send('created')
+      })
+    }
   })
 })
 

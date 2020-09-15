@@ -7,6 +7,8 @@ import SearchForm from './SearchForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login.jsx';
 import key from './key.jsx'
+import Alert from 'react-bootstrap/Alert';
+
 
 var config = {
   headers: { 'Access-Control-Allow-Origin': '*' }
@@ -52,18 +54,19 @@ class App extends React.Component {
   }
 
   onLoginSubmit() {
-    axios.get(`http://localhost:3000/user/`, {
+    axios.get(`/user`, {
       params: {
         id: this.state.currentId,
         password: this.state.currentPass
       },
     })
       .then((data) => {
-        if (data.data === 'yes') {
-          console.log('hello')
+        if (data.data === 'logged') {
           this.setState({ loggedIn: true })
-        } else {
-          console.log('uh oh!')
+        } else if (data.data === 'nonexistent') {
+          alert('User name does not exist!')
+        } else if (data.data === 'passInvalid') {
+          alert('Invalid credentials! Please try again or create a new account.')
         }
       })
   }
@@ -76,8 +79,16 @@ class App extends React.Component {
           pass: this.state.currentPass,
         }
       })
+        .then((data) => {
+          console.log(data.data);
+          if (data.data === 'error') {
+            alert('Username already exists! Please try again.')
+          } else {
+            alert('Account created! Please log in to continue.')
+          }
+        })
     } else {
-      alert('Your passwords do not match!')
+      alert('Your passwords do not match! Account not created.')
     }
   }
 
@@ -194,8 +205,11 @@ class App extends React.Component {
     if (this.state.loggedIn === true) {
       return (
         <div>
-          <div className="login">
-            Logged in as {this.state.currentId}
+          <div className="loggedIn">
+            <Alert key='alert' variant='primary'>
+            Logged in as&nbsp;
+            {this.state.currentId}
+            </Alert>
           </div>
           <div className="countryName">{this.state.currentCountry}</div>
           <div className="quizButton">
@@ -227,7 +241,12 @@ class App extends React.Component {
               onLoginSubmit={this.onLoginSubmit}
             />
           </div>
-          <div className="countryName">{this.state.currentCountry}</div>
+          <div className="countryName">
+          <Alert key='alert' variant='primary'>
+          {this.state.currentCountry}
+            {this.state.currentId}
+            </Alert>
+          </div>
           <div className="quizButton">
             <Quizzer
               questions={this.state.quizQuestions}

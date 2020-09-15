@@ -1,0 +1,102 @@
+#map {
+  display: flex;
+  justify-content: center;
+  height: 580px;
+  width: 1300px;
+  margin: 0;
+  padding: 0;
+  background-color: blanchedalmond;
+}
+
+html,
+body {
+  margin-left: 500;
+  background-color: blanchedalmond;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  background-color: blanchedalmond;
+}
+
+#button {
+  margin: 10px;
+}
+
+#contained-modal-title-vcenter {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.quizNum {
+  color: blue;
+  padding-right: 20px;
+}
+
+.usernameInAlert {
+  color: black;
+  font-weight: bold;
+}
+
+.button {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: left;
+  background-color: blanchedalmond;
+  color: blue;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding-left: 70px;
+  padding-top: 25px;
+  margin-bottom: 0px;
+}
+
+.mapContainer {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countryName {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+}
+
+.quizButton {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  background-color: blanchedalmond;
+  position: absolute;
+  top: 30px;
+  right: 70px;
+  height: 50px;
+}
+
+.accountCreator {
+  margin-right: 10px;
+}
+
+.loggedIn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 50px;
+}
+
+.modalTitle {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
