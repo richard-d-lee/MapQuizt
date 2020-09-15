@@ -1,15 +1,123 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <h1>Starter React App</h1>
-    <div id="app">
 
-    </div>
+<head>
+  <meta charset="utf-8">
+  <title>MapQuizt</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrF5CWHLNoeqsw588b7lyxKnePe7gpdiQ&callback=initMap&libraries=&v=weekly"
+    defer></script>
+  <style type="text/css" >
+  #map {
+  display: flex;
+  justify-content: center;
+  height: 700px;
+  width: 1300px;
+  margin: 0;
+  padding: 0;
+  background-color: blanchedalmond;
+}
 
-    <script src="bundle.js" charset="utf-8"></script>
-  </body>
+html,
+body {
+  margin-left: 500;
+  background-color: blanchedalmond;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  background-color: blanchedalmond;
+}
+
+#button {
+  margin: 10px;
+}
+
+#contained-modal-title-vcenter {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.quizNum {
+  color: blue;
+  padding-right: 20px;
+}
+
+.button {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: blanchedalmond;
+  color: blue;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0px;
+}
+
+.mapContainer {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countryName {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+}
+
+.quizButton {
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  background-color: blanchedalmond;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 50px;
+}
+.accountCreator {
+  margin-right: 10px;
+}
+.modalTitle {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+  </style>
+  <script id="myMap">
+    "use strict";
+    let map;
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+          lat: 40.016582,
+          lng: -105.281693
+        },
+        zoom: 19
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <h1 class="header">MapQuizt</h1>
+  <div id="app"></div>
+  <div class="mapContainer">
+    <div id="map"></div>
+  </div>
+  <script src="bundle.js" charset="utf-8"></script>
+</body>
+
 </html>
