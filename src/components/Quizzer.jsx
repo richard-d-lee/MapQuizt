@@ -24,6 +24,7 @@ function MydModalWithGrid(props) {
             <Row>
               <Button className="button" onClick={() => {
                 props.onAlert();
+                props.onSubmit();
                 props.onHide()
               }}>Submit</Button>
             </Row>

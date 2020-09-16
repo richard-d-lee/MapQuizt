@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login.jsx';
 import key from './key.jsx'
 import Alert from 'react-bootstrap/Alert';
+import Row from 'react-bootstrap/Row';
+import Leaderboard from './Leaderboard.jsx';
 
 
 var config = {
@@ -34,7 +36,8 @@ class App extends React.Component {
       currentId: '',
       currentPass: '',
       currentPassDupe: '',
-      loggedIn: false
+      loggedIn: false,
+      scores: []
     };
     this.onFormChange = this.onFormChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -46,6 +49,7 @@ class App extends React.Component {
     this.onPassDupeChange = this.onPassDupeChange.bind(this);
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
     this.onCreateSubmit = this.onCreateSubmit.bind(this);
+    this.getLeaderboard = this.getLeaderboard.bind(this);
   }
 
 
@@ -92,6 +96,31 @@ class App extends React.Component {
     }
   }
 
+  getLeaderboard() {
+    let sorter = (array) => {
+      let newArr = array;
+      for (let i = 0; i < newArr.length; i++) {
+        if (newArr[i + 1] !== undefined && newArr[i] !== undefined) {
+          console.log(newArr[i])
+          if (newArr[i][1] < newArr[i + 1][1]) {
+            console.log(newArr)
+            let oldArray = newArr[i];
+            let newArray = newArr[i + 1];
+            newArr.splice(i, 1, newArray);
+            newArr.splice(i + 1, 1, oldArray);
+            return sorter(newArr)
+          }
+        }
+      }
+      return newArr;
+    }
+    axios.get('/leaderboard')
+      .then((data) => {
+        console.log(sorter(data.data))
+        this.setState({ scores: data.data })
+      })
+  }
+
   onIdChange() {
     var value = document.getElementById("formBasicId").value;
     this.setState({ currentId: value })
@@ -131,6 +160,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.getLeaderboard();
     axios.get('https://restcountries.eu/rest/v2/all')
       .then((api) => {
         this.setState({ countries: api.data })
@@ -176,7 +206,20 @@ class App extends React.Component {
                 finalCount++
               }
             }
-            this.setState({ correctAnswers: finalCount })
+            this.setState({ correctAnswers: finalCount }, () => {
+              if (this.state.loggedIn === true) {
+                axios.put('/user', {
+                  body: {
+                    id: this.state.currentId,
+                    score: this.state.correctAnswers,
+                  }
+                })
+                  .then((data) => {
+                    this.getLeaderboard();
+                    this.setState({ correctAnswers: this.state.correctAnswers })
+                  })
+              }
+            })
           }
         })
       })
@@ -206,12 +249,23 @@ class App extends React.Component {
       return (
         <div>
           <div className="loggedIn">
-            <Alert key='alert' variant='primary'>
-            Logged in as&nbsp;
+            <Row>
+              <Alert className="logalert" key='alert' variant='primary'>
+                Logged in as&nbsp;
             {this.state.currentId}
+              </Alert>
+              <Button id="button" className="logout" onClick={() => {
+                this.setState({ loggedIn: false })
+              }}>
+                Log Out
+            </Button>
+            </Row>
+          </div>
+          <div className="countryName">
+            <Alert key='alert' variant='primary'>
+              {this.state.currentCountry}
             </Alert>
           </div>
-          <div className="countryName">{this.state.currentCountry}</div>
           <div className="quizButton">
             <Quizzer
               questions={this.state.quizQuestions}
@@ -226,6 +280,9 @@ class App extends React.Component {
               onFormSubmit={this.onFormSubmit}
             />
             <Button id="button" onClick={this.onClick}>Visit a random country!</Button>
+            <Leaderboard
+              data={this.state.scores}
+            />
           </div>
         </div>
       )
@@ -242,9 +299,8 @@ class App extends React.Component {
             />
           </div>
           <div className="countryName">
-          <Alert key='alert' variant='primary'>
-          {this.state.currentCountry}
-            {this.state.currentId}
+            <Alert key='alert' variant='primary'>
+              {this.state.currentCountry}
             </Alert>
           </div>
           <div className="quizButton">
@@ -261,6 +317,9 @@ class App extends React.Component {
               onFormSubmit={this.onFormSubmit}
             />
             <Button id="button" onClick={this.onClick}>Visit a random country!</Button>
+            <Leaderboard
+              data={this.state.scores}
+            />
           </div>
         </div>
       )
