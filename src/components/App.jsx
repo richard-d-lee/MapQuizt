@@ -9,7 +9,7 @@ import Login from './Login.jsx';
 import key from './key.jsx'
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
-import Leaderboard from './Leaderboard.jsx';
+import Leaderboard from './LeaderBoard.jsx';
 
 
 var config = {
