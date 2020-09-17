@@ -6,7 +6,7 @@ import Quizzer from './Quizzer.jsx'
 import SearchForm from './SearchForm.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login.jsx';
-import key from './key.jsx'
+import key from './key.js'
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Leaderboard from './LeaderBoard.jsx';
