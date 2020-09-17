@@ -58,42 +58,42 @@ class App extends React.Component {
   }
 
   onLoginSubmit() {
-    // axios.get(`/user`, {
-    //   params: {
-    //     id: this.state.currentId,
-    //     password: this.state.currentPass
-    //   },
-    // })
-    //   .then((data) => {
-    //     if (data.data === 'logged') {
-    //       this.setState({ loggedIn: true })
-    //     } else if (data.data === 'nonexistent') {
-    //       alert('User name does not exist!')
-    //     } else if (data.data === 'passInvalid') {
-    //       alert('Invalid credentials! Please try again or create a new account.')
-    //     }
-    //   })
+    axios.get(`/user`, {
+      params: {
+        id: this.state.currentId,
+        password: this.state.currentPass
+      },
+    })
+      .then((data) => {
+        if (data.data === 'logged') {
+          this.setState({ loggedIn: true })
+        } else if (data.data === 'nonexistent') {
+          alert('User name does not exist!')
+        } else if (data.data === 'passInvalid') {
+          alert('Invalid credentials! Please try again or create a new account.')
+        }
+      })
   }
 
   onCreateSubmit() {
-    // if (this.state.currentPass === this.state.currentPassDupe) {
-    //   axios.post('/user', {
-    //     body: {
-    //       id: this.state.currentId,
-    //       pass: this.state.currentPass,
-    //     }
-    //   })
-    //     .then((data) => {
-    //       console.log(data.data);
-    //       if (data.data === 'error') {
-    //         alert('Username already exists! Please try again.')
-    //       } else {
-    //         alert('Account created! Please log in to continue.')
-    //       }
-    //     })
-    // } else {
-    //   alert('Your passwords do not match! Account not created.')
-    // }
+    if (this.state.currentPass === this.state.currentPassDupe) {
+      axios.post('/user', {
+        body: {
+          id: this.state.currentId,
+          pass: this.state.currentPass,
+        }
+      })
+        .then((data) => {
+          console.log(data.data);
+          if (data.data === 'error') {
+            alert('Username already exists! Please try again.')
+          } else {
+            alert('Account created! Please log in to continue.')
+          }
+        })
+    } else {
+      alert('Your passwords do not match! Account not created.')
+    }
   }
 
   getLeaderboard() {
@@ -114,11 +114,11 @@ class App extends React.Component {
       }
       return newArr;
     }
-    // axios.get('/leaderboard')
-    //   .then((data) => {
-    //     console.log(sorter(data.data))
-    //     this.setState({ scores: data.data })
-    //   })
+    axios.get('/leaderboard')
+      .then((data) => {
+        console.log(sorter(data.data))
+        this.setState({ scores: data.data })
+      })
   }
 
   onIdChange() {
@@ -208,16 +208,16 @@ class App extends React.Component {
             }
             this.setState({ correctAnswers: finalCount }, () => {
               if (this.state.loggedIn === true) {
-                // axios.put('/user', {
-                //   body: {
-                //     id: this.state.currentId,
-                //     score: this.state.correctAnswers,
-                //   }
-                // })
-                //   .then((data) => {
-                //     this.getLeaderboard();
-                //     this.setState({ correctAnswers: this.state.correctAnswers })
-                //   })
+                axios.put('/user', {
+                  body: {
+                    id: this.state.currentId,
+                    score: this.state.correctAnswers,
+                  }
+                })
+                  .then((data) => {
+                    this.getLeaderboard();
+                    this.setState({ correctAnswers: this.state.correctAnswers })
+                  })
               }
             })
           }
