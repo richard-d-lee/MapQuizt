@@ -12,6 +12,8 @@ import Row from 'react-bootstrap/Row';
 import Leaderboard from './LeaderBoard.jsx';
 
 
+
+
 var config = {
   headers: { 'Access-Control-Allow-Origin': '*' }
 };
@@ -116,7 +118,6 @@ class App extends React.Component {
     }
     axios.get('/leaderboard')
       .then((data) => {
-        console.log(sorter(data.data))
         this.setState({ scores: data.data })
       })
   }
@@ -124,7 +125,6 @@ class App extends React.Component {
   onIdChange() {
     var value = document.getElementById("formBasicId").value;
     this.setState({ currentId: value })
-    console.log(this.state.currentId)
   }
 
   onPassChange() {
@@ -163,7 +163,17 @@ class App extends React.Component {
     this.getLeaderboard();
     axios.get('https://restcountries.eu/rest/v2/all')
       .then((api) => {
-        this.setState({ countries: api.data })
+        this.setState({ countries: api.data }, () => {
+          console.log(this.state.countries)
+          let newObj = {}
+          for (let i = 0; i < this.state.countries.length; i++) {
+            newObj[this.state.countries[i].name] = {
+              questions: ['', '', '', '', '', '', '', '', '', ''],
+              answers: [[], [], [], [], [], [], [], [], [], []]
+            }
+          }
+          console.log(newObj);
+        })
       });
     axios.get('https://opentdb.com/api.php?amount=50&category=22')
       .then((data) => {
@@ -183,7 +193,6 @@ class App extends React.Component {
           correct_answer: 'Submit',
           incorrect_answers: [' ']
         })
-        console.log(this.state.quizQuestions)
         this.setState({ populated: 'true' })
       })
   }
