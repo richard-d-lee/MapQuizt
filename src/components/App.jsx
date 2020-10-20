@@ -239,6 +239,7 @@ class App extends React.Component {
     let randomCountry = Math.floor(Math.random() * 250);
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.countries[randomCountry].name}&key=${key.key}`)
       .then((data) => {
+        console.log(data);
         this.setState({
           currentCountry: data.data.results[0].formatted_address,
           lat: data.data.results[0].geometry.location.lat,
