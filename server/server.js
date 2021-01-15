@@ -7,7 +7,7 @@ const User = mongoose.model('User', { name: String, password: String, score: Num
 
 const app = express();
 
-const PORT = 3000;
+const PORT = 3005;
 
 var getIndexBelowMaxForKey = function(str, max) {
   var hash = 0;
@@ -59,6 +59,7 @@ app.get('/leaderboard', function (req, res) {
 })
 
 app.post('/user', function(req, res) {
+  console.log(req.body)
   User.findOne({ name: req.body.body.id })
   .then((data) => {
     if (data !== null) {
