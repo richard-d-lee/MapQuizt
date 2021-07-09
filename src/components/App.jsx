@@ -258,7 +258,7 @@ class App extends React.Component {
   render() {
     if (this.state.loggedIn === true) {
       return (
-        <div>
+        <div >
           <div className="loggedIn">
             <Row>
               <Alert className="logalert" key='alert' variant='primary'>
