@@ -22,7 +22,7 @@ var getIndexBelowMaxForKey = function(str, max) {
 app.use(express.static(path.join(__dirname, '/../dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+//test
 app.get('/user', function(req, res) {
   User.findOne({ name: req.query.id })
   .then((data) => {
